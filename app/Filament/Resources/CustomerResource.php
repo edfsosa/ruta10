@@ -8,6 +8,7 @@ use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -30,14 +31,29 @@ class CustomerResource extends Resource
             ->schema([
                 Section::make('Customer Information')
                     ->schema([
+                        Select::make('type')
+                            ->options([
+                                'individual' => 'Individual',
+                                'company' => 'Company',
+                            ])
+                            ->default('individual')
+                            ->native(false)
+                            ->required()
+                            ->reactive(),
                         TextInput::make('first_name')
                             ->maxLength(100)
+                            ->visible(fn($get) => $get('type') === 'individual')
                             ->required(),
                         TextInput::make('last_name')
                             ->maxLength(100)
+                            ->visible(fn($get) => $get('type') === 'individual')
                             ->required(),
-                        TextInput::make('ci')
-                            ->integer()
+                        TextInput::make('company_name')
+                            ->maxLength(100)
+                            ->visible(fn($get) => $get('type') === 'company')
+                            ->required(),
+                        TextInput::make('document')
+                            ->label(fn($get) => $get('type') === 'company' ? 'RUC' : 'C.I.')
                             ->minValue(1)
                             ->maxLength(12)
                             ->required(),
@@ -80,13 +96,24 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('first_name')
+                TextColumn::make('type')
+                    ->sortable()
+                    ->searchable()->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'individual' => 'success',
+                        'company' => 'primary',
+                    }),
+    
+                TextColumn::make('name')
+                    ->getStateUsing(function (Customer $customer): string {
+                        return match ($customer->type) {
+                            'individual' => "{$customer->first_name} {$customer->last_name}",
+                            'company' => $customer->company_name,
+                        };
+                    })
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('last_name')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('ci')
+                TextColumn::make('document')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('phone')

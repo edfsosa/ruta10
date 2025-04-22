@@ -10,9 +10,11 @@ class Customer extends Model
     protected $table = 'customers';
 
     protected $fillable = [
+        'type',
         'first_name',
         'last_name',
-        'ci',
+        'company_name',
+        'document',
         'phone',
         'email',
     ];
@@ -20,5 +22,16 @@ class Customer extends Model
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function shipments(): HasMany
+    {
+        return $this->hasMany(Shipment::class);
+    }
+
+    // full name
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

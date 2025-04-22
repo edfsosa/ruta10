@@ -1,0 +1,1030 @@
+[
+  {
+      "id": 1,
+      "name": "Asunción"
+  },
+  {
+      "id": 2,
+      "name": "Bahía Negra"
+  },
+  {
+      "id": 3,
+      "name": "Carmelo Peralta"
+  },
+  {
+      "id": 4,
+      "name": "Puerto Casado"
+  },
+  {
+      "id": 5,
+      "name": "Fuerte Olimpo"
+  },
+  {
+      "id": 6,
+      "name": "Ciudad del Este"
+  },
+  {
+      "id": 7,
+      "name": "Doctor Juan León Mallorquín"
+  },
+  {
+      "id": 8,
+      "name": "Doctor Raúl Peña"
+  },
+  {
+      "id": 9,
+      "name": "Domingo Martínez de Irala"
+  },
+  {
+      "id": 10,
+      "name": "Hernandarias"
+  },
+  {
+      "id": 11,
+      "name": "Iruña"
+  },
+  {
+      "id": 12,
+      "name": "Itakyry"
+  },
+  {
+      "id": 13,
+      "name": "Juan E. O´Leary"
+  },
+  {
+      "id": 14,
+      "name": "Los Cedrales"
+  },
+  {
+      "id": 15,
+      "name": "Mbaracayú"
+  },
+  {
+      "id": 16,
+      "name": "Minga Guazú"
+  },
+  {
+      "id": 17,
+      "name": "Minga Porá"
+  },
+  {
+      "id": 18,
+      "name": "Naranjal"
+  },
+  {
+      "id": 19,
+      "name": "Ñacunday"
+  },
+  {
+      "id": 20,
+      "name": "Presidente Franco"
+  },
+  {
+      "id": 21,
+      "name": "San Alberto"
+  },
+  {
+      "id": 22,
+      "name": "San Cristóbal"
+  },
+  {
+      "id": 23,
+      "name": "Santa Fe del Paraná"
+  },
+  {
+      "id": 24,
+      "name": "Santa Rita"
+  },
+  {
+      "id": 25,
+      "name": "Santa Rosa del Monday"
+  },
+  {
+      "id": 26,
+      "name": "Tavapy"
+  },
+  {
+      "id": 27,
+      "name": "Colonia Yguazú"
+  },
+  {
+      "id": 28,
+      "name": "Bella Vista Norte"
+  },
+  {
+      "id": 29,
+      "name": "Capitán Bado"
+  },
+  {
+      "id": 30,
+      "name": "Pedro Juan Caballero"
+  },
+  {
+      "id": 31,
+      "name": "Zanja Pytá"
+  },
+  {
+      "id": 32,
+      "name": "Karapaí"
+  },
+  {
+      "id": 33,
+      "name": "Filadelfia"
+  },
+  {
+      "id": 34,
+      "name": "Loma Plata"
+  },
+  {
+      "id": 35,
+      "name": "Mcal. Estigarribia"
+  },
+  {
+      "id": 36,
+      "name": "Caaguazú"
+  },
+  {
+      "id": 37,
+      "name": "Carayaó"
+  },
+  {
+      "id": 38,
+      "name": "Cnel. Oviedo"
+  },
+  {
+      "id": 39,
+      "name": "Doctor Cecilio Báez"
+  },
+  {
+      "id": 40,
+      "name": "Doctor Juan Eulogio Estigarribia - Campo 9"
+  },
+  {
+      "id": 41,
+      "name": "Campo 9"
+  },
+  {
+      "id": 42,
+      "name": "Doctor Juan Manuel Frutos"
+  },
+  {
+      "id": 43,
+      "name": "José Domingo Ocampos"
+  },
+  {
+      "id": 44,
+      "name": "La Pastora"
+  },
+  {
+      "id": 45,
+      "name": "Mcal. Francisco S. López"
+  },
+  {
+      "id": 46,
+      "name": "Nueva Londres"
+  },
+  {
+      "id": 47,
+      "name": "Nueva Toledo"
+  },
+  {
+      "id": 48,
+      "name": "Raúl Arsenio Oviedo"
+  },
+  {
+      "id": 49,
+      "name": "Repatriación"
+  },
+  {
+      "id": 50,
+      "name": "R. I. Tres Corrales"
+  },
+  {
+      "id": 51,
+      "name": "San Joaquín"
+  },
+  {
+      "id": 52,
+      "name": "San José de los Arroyos"
+  },
+  {
+      "id": 53,
+      "name": "Mbutuy"
+  },
+  {
+      "id": 54,
+      "name": "Simón Bolívar"
+  },
+  {
+      "id": 55,
+      "name": "Tembiaporá"
+  },
+  {
+      "id": 56,
+      "name": "Tres de Febrero"
+  },
+  {
+      "id": 57,
+      "name": "Vaquería"
+  },
+  {
+      "id": 58,
+      "name": "Yhú"
+  },
+  {
+      "id": 59,
+      "name": "3 de Mayo"
+  },
+  {
+      "id": 60,
+      "name": "Abaí"
+  },
+  {
+      "id": 61,
+      "name": "Buena Vista"
+  },
+  {
+      "id": 62,
+      "name": "Caazapá"
+  },
+  {
+      "id": 63,
+      "name": "Doctor Moisés S. Bertoni"
+  },
+  {
+      "id": 64,
+      "name": "Fulgencio Yegros"
+  },
+  {
+      "id": 65,
+      "name": "General Higinio Morínigo"
+  },
+  {
+      "id": 66,
+      "name": "Maciel"
+  },
+  {
+      "id": 67,
+      "name": "San Juan Nepomuceno"
+  },
+  {
+      "id": 68,
+      "name": "Tavaí"
+  },
+  {
+      "id": 69,
+      "name": "Yuty"
+  },
+  {
+      "id": 71,
+      "name": "Corpus Christi"
+  },
+  {
+      "id": 72,
+      "name": "Curuguaty"
+  },
+  {
+      "id": 73,
+      "name": "Gral. Francisco Caballero Álvarez"
+  },
+  {
+      "id": 74,
+      "name": "Itanará"
+  },
+  {
+      "id": 75,
+      "name": "Katueté"
+  },
+  {
+      "id": 76,
+      "name": "La Paloma"
+  },
+  {
+      "id": 77,
+      "name": "Maracaná"
+  },
+  {
+      "id": 78,
+      "name": "Nueva Esperanza"
+  },
+  {
+      "id": 79,
+      "name": "Salto del Guairá"
+  },
+  {
+      "id": 80,
+      "name": "Villa Ygatimí"
+  },
+  {
+      "id": 81,
+      "name": "Yasy Cañy"
+  },
+  {
+      "id": 82,
+      "name": "Ybyrarovaná"
+  },
+  {
+      "id": 83,
+      "name": "Ypejhú"
+  },
+  {
+      "id": 84,
+      "name": "Yby Pytá"
+  },
+  {
+      "id": 85,
+      "name": "Areguá"
+  },
+  {
+      "id": 86,
+      "name": "Capiatá"
+  },
+  {
+      "id": 87,
+      "name": "Fernando de la Mora"
+  },
+  {
+      "id": 88,
+      "name": "Guarambaré"
+  },
+  {
+      "id": 89,
+      "name": "Itá"
+  },
+  {
+      "id": 90,
+      "name": "Itauguá"
+  },
+  {
+      "id": 91,
+      "name": "J. Augusto Saldivar"
+  },
+  {
+      "id": 92,
+      "name": "Lambaré"
+  },
+  {
+      "id": 93,
+      "name": "Limpio"
+  },
+  {
+      "id": 94,
+      "name": "Luque"
+  },
+  {
+      "id": 95,
+      "name": "Mariano Roque Alonso"
+  },
+  {
+      "id": 96,
+      "name": "Ñemby"
+  },
+  {
+      "id": 97,
+      "name": "Nueva Italia"
+  },
+  {
+      "id": 98,
+      "name": "San Antonio"
+  },
+  {
+      "id": 99,
+      "name": "San Lorenzo"
+  },
+  {
+      "id": 100,
+      "name": "Villa Elisa"
+  },
+  {
+      "id": 101,
+      "name": "Villeta"
+  },
+  {
+      "id": 102,
+      "name": "Ypacaraí"
+  },
+  {
+      "id": 103,
+      "name": "Ypané"
+  },
+  {
+      "id": 104,
+      "name": "Arroyito"
+  },
+  {
+      "id": 105,
+      "name": "Azotey"
+  },
+  {
+      "id": 106,
+      "name": "Belén"
+  },
+  {
+      "id": 107,
+      "name": "Concepción"
+  },
+  {
+      "id": 108,
+      "name": "Horqueta"
+  },
+  {
+      "id": 109,
+      "name": "Loreto"
+  },
+  {
+      "id": 110,
+      "name": "San Carlos del Apa"
+  },
+  {
+      "id": 111,
+      "name": "San Lázaro"
+  },
+  {
+      "id": 112,
+      "name": "Yby Yaú"
+  },
+  {
+      "id": 113,
+      "name": "Sargento José Félix López"
+  },
+  {
+      "id": 114,
+      "name": "San Alfredo"
+  },
+  {
+      "id": 115,
+      "name": "Paso Barreto"
+  },
+  {
+      "id": 116,
+      "name": "Altos"
+  },
+  {
+      "id": 117,
+      "name": "Arroyos y Esteros"
+  },
+  {
+      "id": 118,
+      "name": "Atyrá"
+  },
+  {
+      "id": 119,
+      "name": "Caacupé"
+  },
+  {
+      "id": 120,
+      "name": "Caraguatay"
+  },
+  {
+      "id": 121,
+      "name": "Emboscada"
+  },
+  {
+      "id": 122,
+      "name": "Eusebio Ayala"
+  },
+  {
+      "id": 123,
+      "name": "Isla Pucú"
+  },
+  {
+      "id": 124,
+      "name": "Itacurubí de la Cordillera"
+  },
+  {
+      "id": 125,
+      "name": "Juan de Mena"
+  },
+  {
+      "id": 126,
+      "name": "Loma Grande"
+  },
+  {
+      "id": 127,
+      "name": "Mbocayaty del Yhaguy"
+  },
+  {
+      "id": 128,
+      "name": "Nueva Colombia"
+  },
+  {
+      "id": 129,
+      "name": "Piribebuy"
+  },
+  {
+      "id": 130,
+      "name": "Primero de Marzo"
+  },
+  {
+      "id": 131,
+      "name": "San Bernardino"
+  },
+  {
+      "id": 132,
+      "name": "San José Obrero"
+  },
+  {
+      "id": 133,
+      "name": "Santa Elena"
+  },
+  {
+      "id": 134,
+      "name": "Tobatí"
+  },
+  {
+      "id": 135,
+      "name": "Valenzuela"
+  },
+  {
+      "id": 136,
+      "name": "Borja"
+  },
+  {
+      "id": 137,
+      "name": "Colonia Independencia"
+  },
+  {
+      "id": 138,
+      "name": "Coronel Martínez"
+  },
+  {
+      "id": 139,
+      "name": "Dr. Bottrell"
+  },
+  {
+      "id": 140,
+      "name": "Fassardi"
+  },
+  {
+      "id": 141,
+      "name": "Félix Pérez Cardozo"
+  },
+  {
+      "id": 142,
+      "name": "Garay"
+  },
+  {
+      "id": 143,
+      "name": "Itapé"
+  },
+  {
+      "id": 144,
+      "name": "Iturbe"
+  },
+  {
+      "id": 145,
+      "name": "Mbocayaty"
+  },
+  {
+      "id": 146,
+      "name": "Natalicio Talavera"
+  },
+  {
+      "id": 147,
+      "name": "Ñumí"
+  },
+  {
+      "id": 148,
+      "name": "Paso Yobái"
+  },
+  {
+      "id": 149,
+      "name": "San Salvador"
+  },
+  {
+      "id": 150,
+      "name": "Tebicuary"
+  },
+  {
+      "id": 151,
+      "name": "Troche"
+  },
+  {
+      "id": 152,
+      "name": "Villarrica"
+  },
+  {
+      "id": 153,
+      "name": "Yataity"
+  },
+  {
+      "id": 154,
+      "name": "Alto Verá"
+  },
+  {
+      "id": 155,
+      "name": "Bella Vista"
+  },
+  {
+      "id": 156,
+      "name": "Cambyretá"
+  },
+  {
+      "id": 157,
+      "name": "Capitán Meza"
+  },
+  {
+      "id": 158,
+      "name": "Capitán Miranda"
+  },
+  {
+      "id": 159,
+      "name": "Carlos Antonio López"
+  },
+  {
+      "id": 160,
+      "name": "Carmen del Paraná"
+  },
+  {
+      "id": 161,
+      "name": "Coronel Bogado"
+  },
+  {
+      "id": 162,
+      "name": "Edelira"
+  },
+  {
+      "id": 163,
+      "name": "Encarnación"
+  },
+  {
+      "id": 164,
+      "name": "Fram"
+  },
+  {
+      "id": 165,
+      "name": "General Artigas"
+  },
+  {
+      "id": 166,
+      "name": "General Delgado"
+  },
+  {
+      "id": 167,
+      "name": "Hohenau"
+  },
+  {
+      "id": 168,
+      "name": "Itapúa Poty"
+  },
+  {
+      "id": 169,
+      "name": "Jesús"
+  },
+  {
+      "id": 170,
+      "name": "Colonia La Paz"
+  },
+  {
+      "id": 171,
+      "name": "José Leandro Oviedo"
+  },
+  {
+      "id": 172,
+      "name": "Mayor Otaño"
+  },
+  {
+      "id": 173,
+      "name": "Natalio"
+  },
+  {
+      "id": 174,
+      "name": "Nueva Alborada"
+  },
+  {
+      "id": 175,
+      "name": "Obligado"
+  },
+  {
+      "id": 176,
+      "name": "Pirapó"
+  },
+  {
+      "id": 177,
+      "name": "San Cosme y Damián"
+  },
+  {
+      "id": 178,
+      "name": "San Juan del Paraná"
+  },
+  {
+      "id": 179,
+      "name": "San Pedro del Paraná"
+  },
+  {
+      "id": 180,
+      "name": "San Rafael del Paraná"
+  },
+  {
+      "id": 181,
+      "name": "Tomás Romero Pereira (Maria Auxiliadora)"
+  },
+  {
+      "id": 182,
+      "name": "Trinidad"
+  },
+  {
+      "id": 183,
+      "name": "Yatytay"
+  },
+  {
+      "id": 184,
+      "name": "Ayolas"
+  },
+  {
+      "id": 185,
+      "name": "San Ignacio"
+  },
+  {
+      "id": 186,
+      "name": "San Juan Bautista"
+  },
+  {
+      "id": 187,
+      "name": "San Miguel"
+  },
+  {
+      "id": 188,
+      "name": "San Patricio"
+  },
+  {
+      "id": 189,
+      "name": "Santa María"
+  },
+  {
+      "id": 190,
+      "name": "Santa Rosa de Lima"
+  },
+  {
+      "id": 191,
+      "name": "Santiago"
+  },
+  {
+      "id": 192,
+      "name": "Villa Florida"
+  },
+  {
+      "id": 193,
+      "name": "Yabebyry"
+  },
+  {
+      "id": 194,
+      "name": "Alberdi"
+  },
+  {
+      "id": 195,
+      "name": "Cerrito"
+  },
+  {
+      "id": 196,
+      "name": "Desmochados"
+  },
+  {
+      "id": 197,
+      "name": "General José Eduvigis Díaz"
+  },
+  {
+      "id": 198,
+      "name": "Guazú Cuá"
+  },
+  {
+      "id": 199,
+      "name": "Humaitá"
+  },
+  {
+      "id": 200,
+      "name": "Isla Umbú"
+  },
+  {
+      "id": 201,
+      "name": "Laureles"
+  },
+  {
+      "id": 202,
+      "name": "Mayor José J. Martínez"
+  },
+  {
+      "id": 203,
+      "name": "Paso de Patria"
+  },
+  {
+      "id": 204,
+      "name": "Pilar"
+  },
+  {
+      "id": 205,
+      "name": "San Juan Bautista del Ñeembucú"
+  },
+  {
+      "id": 206,
+      "name": "Tacuaras"
+  },
+  {
+      "id": 207,
+      "name": "Villa Franca"
+  },
+  {
+      "id": 208,
+      "name": "Villalbín"
+  },
+  {
+      "id": 209,
+      "name": "Villa Oliva"
+  },
+  {
+      "id": 210,
+      "name": "Acahay"
+  },
+  {
+      "id": 211,
+      "name": "Caapucú"
+  },
+  {
+      "id": 212,
+      "name": "Carapeguá"
+  },
+  {
+      "id": 213,
+      "name": "Escobar"
+  },
+  {
+      "id": 214,
+      "name": "Gral. Bernardino Caballero"
+  },
+  {
+      "id": 215,
+      "name": "La Colmena"
+  },
+  {
+      "id": 216,
+      "name": "María Antonia"
+  },
+  {
+      "id": 217,
+      "name": "Mbuyapey"
+  },
+  {
+      "id": 218,
+      "name": "Paraguarí"
+  },
+  {
+      "id": 219,
+      "name": "Pirayú"
+  },
+  {
+      "id": 220,
+      "name": "Quiindy"
+  },
+  {
+      "id": 221,
+      "name": "Quyquyhó"
+  },
+  {
+      "id": 222,
+      "name": "San Roque González de Santa Cruz"
+  },
+  {
+      "id": 223,
+      "name": "Sapucai"
+  },
+  {
+      "id": 224,
+      "name": "Tebicuarymí"
+  },
+  {
+      "id": 225,
+      "name": "Yaguarón"
+  },
+  {
+      "id": 226,
+      "name": "Ybycuí"
+  },
+  {
+      "id": 227,
+      "name": "Ybytymí"
+  },
+  {
+      "id": 228,
+      "name": "Benjamín Aceval"
+  },
+  {
+      "id": 229,
+      "name": "Dr. José Falcón"
+  },
+  {
+      "id": 230,
+      "name": "General José María Bruguez"
+  },
+  {
+      "id": 231,
+      "name": "Nanawa"
+  },
+  {
+      "id": 232,
+      "name": "Colonia Paratodo"
+  },
+  {
+      "id": 233,
+      "name": "Pozo Colorado"
+  },
+  {
+      "id": 234,
+      "name": "Puerto Pinasco"
+  },
+  {
+      "id": 235,
+      "name": "Tte. Irala Fernández"
+  },
+  {
+      "id": 236,
+      "name": "Esteban Martínez"
+  },
+  {
+      "id": 237,
+      "name": "Villa Hayes"
+  },
+  {
+      "id": 238,
+      "name": "Antequera"
+  },
+  {
+      "id": 239,
+      "name": "Capiibary"
+  },
+  {
+      "id": 240,
+      "name": "Choré"
+  },
+  {
+      "id": 241,
+      "name": "General Elizardo Aquino"
+  },
+  {
+      "id": 242,
+      "name": "General Isidoro Resquín"
+  },
+  {
+      "id": 243,
+      "name": "Guayaibí"
+  },
+  {
+      "id": 244,
+      "name": "Itacurubí del Rosario"
+  },
+  {
+      "id": 245,
+      "name": "Liberación"
+  },
+  {
+      "id": 246,
+      "name": "Lima"
+  },
+  {
+      "id": 248,
+      "name": "Nueva Germania"
+  },
+  {
+      "id": 249,
+      "name": "San Estanislao"
+  },
+  {
+      "id": 250,
+      "name": "San Pablo"
+  },
+  {
+      "id": 251,
+      "name": "San Pedro de Ycuamandiyú"
+  },
+  {
+      "id": 252,
+      "name": "San Vicente Pancholo"
+  },
+  {
+      "id": 253,
+      "name": "Santa Rosa del Aguaray"
+  },
+  {
+      "id": 254,
+      "name": "Tacuatí"
+  },
+  {
+      "id": 255,
+      "name": "Unión"
+  },
+  {
+      "id": 256,
+      "name": "25 de Diciembre"
+  },
+  {
+      "id": 257,
+      "name": "Villa del Rosario"
+  },
+  {
+      "id": 258,
+      "name": "Yataity del Norte"
+  },
+  {
+      "id": 259,
+      "name": "Yrybucuá"
+  }
+]

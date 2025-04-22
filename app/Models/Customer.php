@@ -29,8 +29,8 @@ class Customer extends Model
         return $this->hasMany(Shipment::class);
     }
 
-    // full name
-    public function getFullNameAttribute(): string
+    // Nombre completo
+    public function fullName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
     }

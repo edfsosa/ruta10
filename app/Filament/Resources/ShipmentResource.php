@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShipmentResource\Pages;
 use App\Filament\Resources\ShipmentResource\RelationManagers;
+use App\Models\Address;
 use App\Models\Shipment;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -34,19 +35,6 @@ class ShipmentResource extends Resource
                             ->readOnly()
                             ->hiddenOn('create')
                             ->required(),
-
-                        Select::make('service_type')
-                            ->options([
-                                'agency_to_agency' => 'Agency to Agency',
-                                'door_to_door' => 'Door to Door',
-                                'agency_to_door' => 'Agency to Door',
-                                'door_to_agency' => 'Door to Agency',
-                            ])
-                            ->searchable()
-                            ->preload()
-                            ->native(false)
-                            ->required(),
-
                         Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
@@ -60,7 +48,7 @@ class ShipmentResource extends Resource
                             ->default('pending')
                             ->hiddenOn('create')
                             ->required(),
-                    ]),
+                    ])->hiddenOn('create'),
 
                 Section::make('Sender & Receiver')
                     ->schema([
@@ -70,7 +58,8 @@ class ShipmentResource extends Resource
                             ->preload()
                             ->native(false)
                             ->required()
-                            ->label('Sender'),
+                            ->label('Sender')
+                            ->reactive(),
 
                         Select::make('receiver_id')
                             ->relationship('receiver', 'document')
@@ -78,38 +67,69 @@ class ShipmentResource extends Resource
                             ->preload()
                             ->native(false)
                             ->required()
-                            ->label('Receiver'),
+                            ->label('Receiver')
+                            ->reactive(),
                     ]),
 
                 Section::make('Logistics')
                     ->schema([
+                        Select::make('service_type')
+                            ->options([
+                                'agency_to_agency' => 'Agency to Agency',
+                                'agency_to_door' => 'Agency to Door',
+                                'door_to_door' => 'Door to Door',
+                                'door_to_agency' => 'Door to Agency',
+                            ])
+                            ->searchable()
+                            ->preload()
+                            ->native(false)
+                            ->reactive()
+                            ->required(),
                         Select::make('origin_agency_id')
                             ->relationship('origin_agency', 'name')
                             ->searchable()
                             ->preload()
                             ->native(false)
-                            ->required(),
-
+                            ->required()
+                            ->visible(fn($get) => $get('service_type') === 'agency_to_agency'
+                                or $get('service_type') === 'agency_to_door'),
                         Select::make('destination_agency_id')
                             ->relationship('destination_agency', 'name')
                             ->searchable()
                             ->preload()
                             ->native(false)
-                            ->required(),
-
+                            ->required()
+                            ->visible(fn($get) => $get('service_type') === 'agency_to_agency'
+                                or $get('service_type') === 'door_to_agency'),
                         Select::make('pickup_address_id')
                             ->relationship('pickup_address', 'address')
+                            ->options(fn($get) => Address::where('customer_id', $get('sender_id'))->pluck('address', 'id'))
                             ->searchable()
                             ->preload()
                             ->native(false)
-                            ->label('Pickup Address'),
-
+                            ->required()
+                            ->visible(fn($get) => $get('service_type') === 'door_to_door'
+                                or $get('service_type') === 'door_to_agency'),
                         Select::make('delivery_address_id')
                             ->relationship('delivery_address', 'address')
                             ->searchable()
+                            ->options(fn($get) => Address::where('customer_id', $get('receiver_id'))->pluck('address', 'id'))
                             ->preload()
                             ->native(false)
-                            ->label('Delivery Address'),
+                            ->required()
+                            ->visible(fn($get) => $get('service_type') === 'door_to_door'
+                                or $get('service_type') === 'agency_to_door'),
+                        Select::make('driver_id')
+                            ->relationship('driver', 'user_id')
+                            ->searchable()
+                            ->preload()
+                            ->native(false),
+                        Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->native(false)
+                            ->readOnly()
+                            ->hiddenOn('create')
+                            ->required(),
                         Textarea::make('notes')
                             ->maxLength(1000)
                             ->columnSpanFull()

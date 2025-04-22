@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductType extends Model
+class City extends Model
 {
-    protected $table = 'product_types';
+    protected $table = 'cities';
 
     protected $fillable = [
         'name',

@@ -20,6 +20,7 @@ class Shipment extends Model
         'status',
         'pickup_address_id',
         'delivery_address_id',
+        'driver_id',
         'notes',
     ];
 
@@ -51,6 +52,16 @@ class Shipment extends Model
     public function delivery_address(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'delivery_address_id');
+    }
+
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class, 'driver_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function histories(): HasMany

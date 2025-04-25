@@ -21,6 +21,7 @@ class Shipment extends Model
         'pickup_address_id',
         'delivery_address_id',
         'driver_id',
+        'user_id',
         'notes',
     ];
 
@@ -68,6 +69,12 @@ class Shipment extends Model
     {
         return $this->hasMany(ShipmentHistory::class);
     }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(ShipmentItem::class);
+    }
+
 
     protected static function booted()
     {

@@ -6,6 +6,7 @@ use App\Filament\Resources\AgencyResource\Pages;
 use App\Filament\Resources\AgencyResource\RelationManagers;
 use App\Models\Agency;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -31,8 +32,12 @@ class AgencyResource extends Resource
                 TextInput::make('address')
                     ->maxLength(255)
                     ->required(),
-                TextInput::make('city')
-                    ->maxLength(100)
+                Select::make('city_id')
+                    ->relationship('city', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->live()
+                    ->native(false)
                     ->required(),
                 TextInput::make('phone')
                     ->tel()
@@ -56,7 +61,7 @@ class AgencyResource extends Resource
                 TextColumn::make('address')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('city')
+                TextColumn::make('city.name')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('phone')

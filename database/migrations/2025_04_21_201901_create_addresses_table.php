@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->string('label', 100);
             $table->string('address', 255);
-            $table->string('city', 100);
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });

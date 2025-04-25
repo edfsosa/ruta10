@@ -13,12 +13,17 @@ class Address extends Model
         'customer_id',
         'label',
         'address',
-        'city',
+        'city_id',
         'is_default',
     ];
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 }

@@ -78,8 +78,12 @@ class CustomerResource extends Resource
                                 TextInput::make('address')
                                     ->maxLength(255)
                                     ->required(),
-                                TextInput::make('city')
-                                    ->maxLength(100)
+                                Select::make('city_id')
+                                    ->relationship('city', 'name')
+                                    ->preload()
+                                    ->searchable()
+                                    ->live()
+                                    ->native(false)
                                     ->required(),
                                 Toggle::make('is_default')
                                     ->default(false)
@@ -104,13 +108,7 @@ class CustomerResource extends Resource
                         'company' => 'primary',
                     }),
     
-                TextColumn::make('name')
-                    ->getStateUsing(function (Customer $customer): string {
-                        return match ($customer->type) {
-                            'individual' => "{$customer->first_name} {$customer->last_name}",
-                            'company' => $customer->company_name,
-                        };
-                    })
+                TextColumn::make('full_name')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('document')

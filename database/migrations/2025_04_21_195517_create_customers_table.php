@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['individual', 'company']); // si es persona o empresa
-            $table->string('first_name', 100)->nullable(); // solo para personas
-            $table->string('last_name', 100)->nullable(); // solo para personas
+            $table->string('first_name', 50)->nullable(); // solo para personas
+            $table->string('last_name', 50)->nullable(); // solo para personas
+            $table->string('full_name', 100)->nullable(); // solo para personas
             $table->string('company_name', 100)->nullable(); // solo para empresas
             $table->string('document', 20)->unique(); // C.I. o RUC
             $table->string('phone', 20);

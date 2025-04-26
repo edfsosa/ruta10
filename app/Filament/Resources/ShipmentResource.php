@@ -285,6 +285,11 @@ class ShipmentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Print labels')
+                    ->icon('heroicon-o-printer')
+                    ->color('primary')
+                    ->url(fn($record) => route('shipments.labels', $record)) // Usamos una ruta
+                    ->openUrlInNewTab(), // Esto hace que abra en nueva pestaña
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

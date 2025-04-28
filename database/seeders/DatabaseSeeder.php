@@ -21,9 +21,17 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
+        User::factory()->create([
+            'name' => 'Carlos',
+            'email' => 'carlos@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
         $this->call([
             // Add other seeders here
             CitySeeder::class,
+            DriverSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

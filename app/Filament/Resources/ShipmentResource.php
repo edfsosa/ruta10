@@ -21,6 +21,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\DatePicker;
@@ -369,22 +370,16 @@ class ShipmentResource extends Resource
                         default => 'Desconocido',
                     })
                     ->sortable(),
-                TextColumn::make('status')
+                SelectColumn::make('status')
                     ->label('Estado')
-                    ->badge()
-                    ->color(fn($state) => match ($state) {
-                        'pending' => 'gray',
-                        'in_transit' => 'warning',
-                        'delivered' => 'success',
-                        'cancelled' => 'danger',
-                    })
-                    ->formatStateUsing(fn($state) => match ($state) {
+                    ->options([
                         'pending' => 'Pendiente',
                         'in_transit' => 'En tránsito',
                         'delivered' => 'Entregado',
                         'cancelled' => 'Cancelado',
-                    })
+                    ])
                     ->sortable(),
+                
                 TextColumn::make('driver.user.name')
                     ->label('Conductor')
                     ->formatStateUsing(fn($state, $record) => $state . ' (' . $record->driver->ci . ')')
@@ -447,7 +442,13 @@ class ShipmentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Print labels')
+                Tables\Actions\Action::make('ticket')
+                    ->label('Ticket')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn(Shipment $record) => route('shipments.ticket', $record))
+                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('labels')
+                    ->label('Etiquetas')
                     ->icon('heroicon-o-printer')
                     ->color('primary')
                     ->url(fn($record) => route('shipments.labels', $record)) // Usamos una ruta

@@ -3,59 +3,78 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Etiquetas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+            font-size: 10px;
+            margin: 0;
+            padding: 5px;
+            width: 80mm;
+            /* Forzamos ancho real del rollo térmico */
         }
 
         .label {
-            border: 1px solid #000;
-            padding: 15px;
-            margin-bottom: 30px;
-            width: 300px;
-            height: 180px;
+            border: 1px dashed #000;
+            width: 100%;
+            padding: 5px 5px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
             text-align: center;
             page-break-inside: avoid;
         }
 
         .label h4 {
-            margin: 0 0 10px 0;
+            margin: 2px 0;
+            font-size: 12px;
         }
 
         .barcode {
-            margin-top: 10px;
+            margin: 5px 0;
+        }
+
+        .barcode img {
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated;
         }
 
         .footer {
-            margin-top: 5px;
+            margin-top: 4px;
             font-size: 10px;
         }
     </style>
 </head>
 
 <body>
+
     @foreach ($items as $item)
         @for ($i = 1; $i <= $item->quantity; $i++)
             <div class="label">
-                <h4>{{ $item->productType->name }}</h4>
+                <h4>Producto: {{ $item->productType->name }}</h4>
+                <h4>Remitente: {{ $item->shipment->sender->full_name }}</h4>
+                <h4>Destinatario: {{ $item->shipment->receiver->full_name }}</h4>
+                <h4>{{ $shipment->tracking_number }}<br>
+                    {{ $i }}/{{ $item->quantity }}</h4>
 
-                {{-- Código de barras --}}
                 <div class="barcode">
-                    {!! DNS1D::getBarcodeHTML($item->barcode, 'C128', 2, 50) !!}
+                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($item->barcode, 'C128', 2, 40) }}"
+                        alt="barcode">
                 </div>
 
-                {{-- Info de tracking y numeración --}}
                 <div class="footer">
-                    {{ $shipment->tracking_number }}<br>
-                    {{ $i }}/{{ $item->quantity }}
+                    
                 </div>
             </div>
         @endfor
     @endforeach
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
+
 </body>
 
 </html>

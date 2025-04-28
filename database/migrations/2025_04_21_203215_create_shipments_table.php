@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('delivery_address_id')->nullable()->constrained('addresses')->onDelete('cascade');
             $table->foreignId('driver_id')->nullable()->constrained('drivers')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('payment_method')->nullable();
+            $table->string('payment_method', 30);
             $table->text('notes')->nullable();
             $table->timestamps();
         });

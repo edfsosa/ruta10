@@ -17,6 +17,9 @@ class ShipmentLabelController extends Controller
             'items' => $items,
         ]);
 
-        return $pdf->stream('etiquetas-envio-' . $shipment->tracking_number . '.pdf');
+        return view('pdf.shipment-labels', [
+            'shipment' => $shipment,
+            'items' => $items,
+        ]);
     }
 }

@@ -87,4 +87,26 @@ class Shipment extends Model
             $shipment->tracking_number = $code;
         });
     }
+
+    public function getStatusLabelAttribute()
+    {
+        return match ($this->status) {
+            'pending' => 'Pendiente',
+            'in_transit' => 'En tránsito',
+            'delivered' => 'Entregado',
+            'canceled' => 'Cancelado',
+            default => 'Desconocido',
+        };
+    }
+
+    public function getServiceTypeLabelAttribute()
+    {
+        return match ($this->service_type) {
+            'agency_to_agency' => 'Agencia a Agencia',
+            'door_to_door' => 'Puerta a Puerta',
+            'door_to_agency' => 'Puerta a Agencia',
+            'agency_to_door' => 'Agencia a Puerta',
+            default => 'Desconocido',
+        };
+    }
 }

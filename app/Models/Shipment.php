@@ -22,6 +22,7 @@ class Shipment extends Model
         'delivery_address_id',
         'driver_id',
         'user_id',
+        'payment_method',
         'notes',
     ];
 

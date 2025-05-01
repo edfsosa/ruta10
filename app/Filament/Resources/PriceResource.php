@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,49 +20,54 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class PriceResource extends Resource
 {
     protected static ?string $model = Price::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Precios';
+    protected static ?string $label = 'Precio';
+    protected static ?string $pluralLabel = 'Precios';
+    protected static ?string $slug = 'precios';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('from_city_id')
+                    ->label('Ciudad de Origen')
                     ->relationship('fromCity', 'name')
-                    ->label('Origin City')
                     ->required()
                     ->searchable()
                     ->preload()
                     ->live()
                     ->native(false),
                 Select::make('to_city_id')
+                    ->label('Ciudad de Destino')
                     ->relationship('toCity', 'name')
-                    ->label('Destination City')
                     ->required()
                     ->searchable()
                     ->preload()
                     ->live()
                     ->native(false),
                 Select::make('product_type_id')
+                    ->label('Tipo de Producto')
                     ->relationship('productType', 'name')
-                    ->label('Product Type')
                     ->required()
                     ->searchable()
                     ->preload()
                     ->live()
                     ->native(false),
                 Select::make('service_type')
+                    ->label('Tipo de Servicio')
                     ->options([
-                        'agency_to_agency' => 'Agency to Agency',
-                        'door_to_door' => 'Door to Door',
-                        'agency_to_door' => 'Agency to Door',
-                        'door_to_agency' => 'Door to Agency',
+                        'agency_to_agency' => 'Agencia a Agencia',
+                        'door_to_door' => 'Puerta a Puerta',
+                        'agency_to_door' => 'Agencia a Puerta',
+                        'door_to_agency' => 'Puerta a Agencia',
                     ])
                     ->searchable()
                     ->preload()
                     ->native(false)
                     ->required(),
                 TextInput::make('price')
+                    ->label('Precio')
                     ->integer()
                     ->minValue(1)
                     ->maxLength(20)
@@ -74,42 +80,88 @@ class PriceResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('fromCity.name')
-                    ->label('Origin')
+                    ->label('Origen')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('toCity.name')
-                    ->label('Destination')
+                    ->label('Destino')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('productType.name')
-                    ->label('Product')
+                    ->label('Producto')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('service_type')
+                    ->label('Servicio')
                     ->badge()
                     ->color(fn($state) => match ($state) {
-                        'agency_to_agency' => 'primary',
+                        'agency_to_agency' => 'success',
                         'door_to_door' => 'info',
-                        'agency_to_door', 'door_to_agency' => 'warning',
+                        'agency_to_door' => 'warning',
+                        'door_to_agency' => 'warning',
                         default => 'gray',
+                    })
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        'agency_to_agency' => 'Agencia a Agencia',
+                        'door_to_door' => 'Puerta a Puerta',
+                        'agency_to_door' => 'Agencia a Puerta',
+                        'door_to_agency' => 'Puerta a Agencia',
+                        default => 'Desconocido',
                     })
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('price')
+                    ->label('Precio')
                     ->money('PYG')
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('service_type')
+                    ->label('Tipo de servicio')
+                    ->multiple()
+                    ->options([
+                        'agency_to_agency' => 'Agencia a Agencia',
+                        'door_to_door' => 'Puerta a Puerta',
+                        'agency_to_door' => 'Agencia a Puerta',
+                        'door_to_agency' => 'Puerta a Agencia',
+                    ])
+                    ->native(false),
+                SelectFilter::make('from_city_id')
+                    ->label('Origen')
+                    ->relationship('fromCity', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->native(false),
+                SelectFilter::make('to_city_id')
+                    ->label('Destino')
+                    ->relationship('toCity', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->native(false),
+                SelectFilter::make('product_type_id')
+                    ->label('Producto')
+                    ->relationship('productType', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->native(false),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

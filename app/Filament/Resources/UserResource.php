@@ -20,28 +20,36 @@ use Illuminate\Support\Facades\Hash;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Usuarios';
+    protected static ?string $label = 'Usuario';
+    protected static ?string $pluralLabel = 'Usuarios';
+    protected static ?string $slug = 'usuarios';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Nombre')
+                    ->autoFocus()
                     ->maxLength(100)
                     ->required(),
                 TextInput::make('email')
+                    ->label('Correo Electrónico')
                     ->email()
                     ->maxLength(100)
                     ->required(),
                 TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
                     ->minLength(8)
                     ->revealable()
                     ->maxLength(100)
-                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                    ->required(fn($context) => $context === 'create'),
+                    ->hiddenOn('edit')
+                    ->required(),
                 Select::make('roles')
+                    ->label('Rol')
                     ->relationship('roles', 'name')
                     ->searchable()
                     ->preload()
@@ -55,20 +63,29 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('email')
+                    ->label('Correo Electrónico')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('roles.name')
+                    ->label('Rol')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

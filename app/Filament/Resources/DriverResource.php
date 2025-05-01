@@ -20,14 +20,19 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class DriverResource extends Resource
 {
     protected static ?string $model = Driver::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Conductores';
+    protected static ?string $label = 'Conductor';
+    protected static ?string $pluralLabel = 'Conductores';
+    protected static ?string $slug = 'conductores';
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('user_id')
+                    ->label('Usuario')
+                    ->autoFocus()
                     ->relationship('user', 'name')
                     ->options(fn() => User::role('Conductor')
                     ->whereDoesntHave('driver')
@@ -38,12 +43,14 @@ class DriverResource extends Resource
                     ->native(false)
                     ->required(),
                 TextInput::make('ci')
+                    ->label('CI')
                     ->integer()
                     ->minValue(1)
                     ->maxLength(20)
                     ->unique(ignoreRecord: true)
                     ->required(),
                 TextInput::make('phone')
+                    ->label('Teléfono')
                     ->tel()
                     ->prefix('+595')
                     ->minLength(7)
@@ -57,20 +64,25 @@ class DriverResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')
+                    ->label('Nombre')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('ci')
+                    ->label('CI')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->sortable()
                     ->searchable()
                     ->prefix('+595'),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

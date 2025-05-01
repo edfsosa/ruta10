@@ -19,20 +19,27 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class AgencyResource extends Resource
 {
     protected static ?string $model = Agency::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Agencias';
+    protected static ?string $label = 'Agencia';
+    protected static ?string $pluralLabel = 'Agencias';
+    protected static ?string $slug = 'agencias';
+    protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Nombre')
+                    ->autoFocus()
                     ->maxLength(100)
                     ->required(),
                 TextInput::make('address')
+                    ->label('Dirección')
                     ->maxLength(255)
                     ->required(),
                 Select::make('city_id')
+                    ->label('Ciudad')
                     ->relationship('city', 'name')
                     ->preload()
                     ->searchable()
@@ -40,12 +47,14 @@ class AgencyResource extends Resource
                     ->native(false)
                     ->required(),
                 TextInput::make('phone')
+                    ->label('Teléfono')
                     ->tel()
                     ->prefix('+595')
                     ->minLength(7)
                     ->maxLength(20)
                     ->required(),
                 TextInput::make('email')
+                    ->label('Correo Electrónico')
                     ->email()
                     ->maxLength(100),
             ]);
@@ -56,30 +65,36 @@ class AgencyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('address')
+                    ->label('Dirección')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('city.name')
+                    ->label('Ciudad')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->sortable()
                     ->searchable()
                     ->prefix('+595'),
                 TextColumn::make('email')
+                    ->label('Correo Electrónico')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
             ])
             ->filters([
                 //

@@ -18,7 +18,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ProductTypeResource extends Resource
 {
     protected static ?string $model = ProductType::class;
-
+    protected static ?string $navigationLabel = 'Productos';
+    protected static ?string $label = 'Producto';
+    protected static ?string $pluralLabel = 'Productos';
+    protected static ?string $slug = 'productos';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -26,23 +29,33 @@ class ProductTypeResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Nombre')
+                    ->autoFocus()
                     ->maxLength(50)
                     ->required(),
-            ]);
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

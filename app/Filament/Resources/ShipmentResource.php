@@ -356,7 +356,7 @@ class ShipmentResource extends Resource
                     ->label('Tipo de servicio')
                     ->badge()
                     ->color(fn($state) => match ($state) {
-                        'agency_to_agency' => 'primary',
+                        'agency_to_agency' => 'success',
                         'door_to_door' => 'info',
                         'agency_to_door' => 'warning',
                         'door_to_agency' => 'warning',
@@ -402,7 +402,8 @@ class ShipmentResource extends Resource
                         'in_transit' => 'En tránsito',
                         'delivered' => 'Entregado',
                         'cancelled' => 'Cancelado',
-                    ]),
+                    ])
+                    ->native(false),
                 SelectFilter::make('service_type')
                     ->label('Tipo de servicio')
                     ->multiple()
@@ -411,7 +412,8 @@ class ShipmentResource extends Resource
                         'door_to_door' => 'Puerta a Puerta',
                         'agency_to_door' => 'Agencia a Puerta',
                         'door_to_agency' => 'Puerta a Agencia',
-                    ]),
+                    ])
+                    ->native(false),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')

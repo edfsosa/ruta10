@@ -19,17 +19,23 @@ use Spatie\Permission\Models\Role as ModelsRole;
 class RoleResource extends Resource
 {
     protected static ?string $model = ModelsRole::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Roles';
+    protected static ?string $label = 'Rol';
+    protected static ?string $pluralLabel = 'Roles';
+    protected static ?string $slug = 'roles';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Nombre')
+                    ->autoFocus()
                     ->maxLength(50)
                     ->required(),
                 TextInput::make('guard_name')
+                    ->label('Guard')
                     ->maxLength(50)
                     ->default('web')
                     ->readOnly()
@@ -41,17 +47,25 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('guard_name')
+                    ->label('Guard')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

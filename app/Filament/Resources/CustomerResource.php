@@ -139,7 +139,7 @@ class CustomerResource extends Resource
                         'individual' => 'success',
                         'company' => 'primary',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'individual' => 'Individual',
                         'company' => 'Empresa',
                     }),
@@ -179,7 +179,7 @@ class CustomerResource extends Resource
                         'company' => 'Empresa',
                     ])
                     ->native(false),
-                    Filter::make('created_at')
+                Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')
                             ->label('Creados desde')

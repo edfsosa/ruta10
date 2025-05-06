@@ -24,4 +24,20 @@ class ShipmentHistory extends Model
     {
         return $this->belongsTo(User::class, 'changed_by');
     }
+
+    public function getStatusLabelAttribute()
+    {
+        return match ($this->status) {
+            'pending' => 'Pendiente',
+            'in_transit' => 'En tránsito',
+            'delivered' => 'Entregado',
+            'canceled' => 'Cancelado',
+            default => 'Desconocido',
+        };
+    }
+    
+    public function getChangedByNameAttribute()
+    {
+        return $this->user ? $this->user->name : 'Desconocido';
+    }
 }

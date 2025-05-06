@@ -14,6 +14,12 @@ class ManageShipments extends ManageRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\Action::make('tracking')
+                ->label('Tracking')
+                ->url(route('tracking.form'))
+                ->openUrlInNewTab()
+                ->icon('heroicon-o-magnifying-glass')
+                ->color('primary'),
         ];
     }
 }

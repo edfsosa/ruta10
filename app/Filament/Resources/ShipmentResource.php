@@ -78,11 +78,8 @@ class ShipmentResource extends Resource
                                     'door_to_door' => 'Puerta a Puerta',
                                     'door_to_agency' => 'Puerta a Agencia',
                                 ])
-                                ->searchable()
-                                ->preload()
                                 ->native(false)
                                 ->reactive()
-                                ->autoFocus()
                                 ->required(),
 
                             Select::make('payment_method')
@@ -98,7 +95,6 @@ class ShipmentResource extends Resource
 
                                 ])
                                 ->searchable()
-                                ->preload()
                                 ->native(false)
                                 ->reactive()
                                 ->required(),
@@ -192,15 +188,16 @@ class ShipmentResource extends Resource
 
                             Select::make('pickup_address_id')
                                 ->label('Dirección de origen')
-                                ->relationship(
-                                    name: 'pickup_address',
-                                    titleAttribute: 'address',
-                                    modifyQueryUsing: fn($query, $get) => $query->where('customer_id', $get('sender_id'))
+                                ->relationship('pickupAddress', 'address')
+                                ->options(
+                                    fn($get) => Address::with('city')
+                                        ->where('customer_id', $get('sender_id'))
+                                        ->get()
+                                        ->mapWithKeys(fn($address) => [
+                                            $address->id => $address->address . ' - ' . $address->city->name
+                                        ])
                                 )
-                                ->searchable([
-                                    'address',
-                                    'label',
-                                ])
+                                ->searchable()
                                 ->preload()
                                 ->native(false)
                                 ->required()
@@ -213,10 +210,14 @@ class ShipmentResource extends Resource
 
                             Select::make('delivery_address_id')
                                 ->label('Dirección de destino')
-                                ->relationship(
-                                    name: 'delivery_address',
-                                    titleAttribute: 'address',
-                                    modifyQueryUsing: fn($query, $get) => $query->where('customer_id', $get('receiver_id'))
+                                ->relationship('deliveryAddress', 'address')
+                                ->options(
+                                    fn($get) => Address::with('city')
+                                        ->where('customer_id', $get('receiver_id'))
+                                        ->get()
+                                        ->mapWithKeys(fn($address) => [
+                                            $address->id => $address->address . ' - ' . $address->city->name
+                                        ])
                                 )
                                 ->searchable()
                                 ->preload()
@@ -379,7 +380,7 @@ class ShipmentResource extends Resource
                         'cancelled' => 'Cancelado',
                     ])
                     ->sortable(),
-                
+
                 TextColumn::make('driver.user.name')
                     ->label('Conductor')
                     ->formatStateUsing(fn($state, $record) => $state . ' (' . $record->driver->ci . ')')

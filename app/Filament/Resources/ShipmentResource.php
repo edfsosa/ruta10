@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
 use Filament\Support\Exceptions\Halt;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ShipmentResource extends Resource
@@ -527,6 +528,7 @@ class ShipmentResource extends Resource
                     ->url(fn($record) => route('shipments.labels', $record)) // Usamos una ruta
                     ->openUrlInNewTab(), // Esto hace que abra en nueva pestaña
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -535,9 +537,17 @@ class ShipmentResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
+    public static function getEloquentQuery(): Builder
     {
-        return [];
+        $query = parent::getEloquentQuery();
+
+        // Si es admin, no filtramos
+        if (Auth::user()->hasRole('Superadministrador') || Auth::user()->hasRole('Administrador')) {
+            return $query;
+        }
+
+        // Sino, sólo los propios
+        return $query->where('user_id', Auth::id());
     }
 
     public static function getPages(): array

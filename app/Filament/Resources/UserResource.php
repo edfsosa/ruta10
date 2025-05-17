@@ -25,6 +25,8 @@ class UserResource extends Resource
     protected static ?string $pluralLabel = 'Usuarios';
     protected static ?string $slug = 'usuarios';
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static ?string $navigationGroup = 'Autenticación';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -51,9 +53,6 @@ class UserResource extends Resource
                 Select::make('roles')
                     ->label('Rol')
                     ->relationship('roles', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->live()
                     ->native(false)
                     ->required(),
             ]);

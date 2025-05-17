@@ -37,8 +37,7 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 Section::make('Datos Generales')
-                    ->columns(2)
-                    ->description('Los datos generales son necesarios para la creación de un cliente.')
+                    ->columns(3)
                     ->schema([
                         Radio::make('type')
                             ->label('Tipo')
@@ -86,10 +85,9 @@ class CustomerResource extends Resource
                             ->required(),
                     ]),
                 Section::make('Direcciones')
-                    ->description('Las direcciones son necesarias para el retiro y envio de productos.')
                     ->schema([
                         Repeater::make('addresses')
-                            ->label('Direcciones')
+                            ->label('')
                             ->relationship()
                             ->schema([
                                 TextInput::make('label')
@@ -115,7 +113,7 @@ class CustomerResource extends Resource
                                     ->default(false)
                                     ->required(),
                             ])
-                            ->columns(2)
+                            ->columns(3)
                             ->defaultItems(1)
                             ->collapsible()
                             ->addActionLabel('Agregar dirección'),

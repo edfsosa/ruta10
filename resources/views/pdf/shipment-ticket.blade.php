@@ -76,46 +76,47 @@
             <div>Carios c/ Av. La Victoria</div>
             <div>Asunción, Paraguay</div>
             <div>Tel: 021 504 018</div>
+            <div>www.ruta10srl.com</div>
             <div class="bold">Ticket {{ $shipment->tracking_number }}</div>
         </div>
 
         <div class="line"></div>
 
         <div class="section">
-            <div>Fecha: {{ date('d/m/Y', strtotime($shipment->created_at)) }}</div>
-            <div>Hora: {{ date('H:i', strtotime($shipment->created_at)) }}</div>
-            <div>Tipo: {{ $shipment->getServiceTypeLabelAttribute() }}</div>
-            <div>Pago: {{ $shipment->payment_method }}</div>
-            <div>Transportista: {{ $shipment->driver->user->name }}</div>
-            <div>Obs: {{ $shipment->notes }}</div>
+            <div><strong>Fecha/Hora:</strong> {{ date('d/m/Y H:i', strtotime($shipment->created_at)) }}</div>
+            <div><strong>Servicio:</strong> {{ $shipment->getServiceTypeLabelAttribute() }}</div>
+            <div><strong>Método Pago:</strong> {{ $shipment->payment_method }}</div>
+            <div><strong>Obs:</strong> {{ $shipment->notes }}</div>
         </div>
 
         <div class="line"></div>
 
         <div class="section">
-            <div>Remitente: {{ $shipment->sender->full_name }}</div>
+            <div><strong>Remitente:</strong> {{ $shipment->sender->full_name }}</div>
 
             @if ($shipment->service_type === 'agency_to_agency' || $shipment->service_type === 'agency_to_door')
-                <div>Agencia: {{ $shipment->origin_agency->name }}</div>
+                <div><strong>Agencia:</strong> {{ $shipment->origin_agency->name }}</div>
             @elseif ($shipment->service_type === 'door_to_agency' || $shipment->service_type === 'door_to_door')
-                <div>Dirección: {{ $shipment->pickup_address->address }}</div>
-                <div>Ciudad: {{ $shipment->pickup_address->city->name }}</div>
+                <div><strong>Dirección:</strong> {{ $shipment->pickup_address->address }}</div>
+                <div><strong>Ciudad:</strong> {{ $shipment->pickup_address->city->name }}</div>
             @endif
 
-            <div>Tel: {{ $shipment->sender->phone }}</div>
+            <div><strong>Tel:</strong> 0{{ $shipment->sender->phone }}</div>
         </div>
 
+        <div class="line"></div>
+
         <div class="section">
-            <div>Destinatario: {{ $shipment->receiver->full_name }}</div>
+            <div><strong>Destinatario:</strong> {{ $shipment->receiver->full_name }}</div>
 
             @if ($shipment->service_type === 'agency_to_agency' || $shipment->service_type === 'door_to_agency')
-                <div>Agencia: {{ $shipment->destination_agency->name }}</div>
+                <div><strong>Agencia:</strong> {{ $shipment->destination_agency->name }}</div>
             @elseif ($shipment->service_type === 'agency_to_door' || $shipment->service_type === 'door_to_door')
-                <div>Dirección: {{ $shipment->delivery_address->address }}</div>
-                <div>Ciudad: {{ $shipment->delivery_address->city->name }}</div>
+                <div><strong>Dirección:</strong> {{ $shipment->delivery_address->address }}</div>
+                <div><strong>Ciudad:</strong> {{ $shipment->delivery_address->city->name }}</div>
             @endif
 
-            <div>Tel: {{ $shipment->receiver->phone }}</div>
+            <div><strong>Tel:</strong> {{ $shipment->receiver->phone }}</div>
         </div>
 
         <div class="line"></div>
@@ -163,10 +164,14 @@
 
         <div class="line"></div>
 
-        <div class="text-center">¡Gracias por la confianza!</div>
-        <br>
-        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($shipment->tracking_number, 'C128') }}"
-            alt="barcode" />
+        <div class="section">
+            <div class="text-center">Escaneá y seguí tu envío</div><br>
+            <div class="barcode">
+                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://ruta10srl.com/tracking', 'QRCODE') }}"
+                    alt="QR Code">
+            </div><br>
+            <div class="text-center">Gracias por su preferencia.</div>
+        </div>
 
     </div>
     <script>

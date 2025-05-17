@@ -25,8 +25,12 @@ use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TagsInput;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
+use Filament\Support\Exceptions\Halt;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ShipmentResource extends Resource
@@ -78,11 +82,8 @@ class ShipmentResource extends Resource
                                     'door_to_door' => 'Puerta a Puerta',
                                     'door_to_agency' => 'Puerta a Agencia',
                                 ])
-                                ->searchable()
-                                ->preload()
                                 ->native(false)
                                 ->reactive()
-                                ->autoFocus()
                                 ->required(),
 
                             Select::make('payment_method')
@@ -97,8 +98,6 @@ class ShipmentResource extends Resource
                                     'contra entrega' => 'Contra entrega',
 
                                 ])
-                                ->searchable()
-                                ->preload()
                                 ->native(false)
                                 ->reactive()
                                 ->required(),
@@ -149,8 +148,6 @@ class ShipmentResource extends Resource
                                     'delivered' => 'Entregado',
                                     'cancelled' => 'Cancelado',
                                 ])
-                                ->searchable()
-                                ->preload()
                                 ->native(false)
                                 ->default('pending')
                                 ->hiddenOn('create')
@@ -159,8 +156,7 @@ class ShipmentResource extends Resource
                                 ->label('Notas')
                                 ->placeholder('Máximo 500 caracteres')
                                 ->rows(3)
-                                ->maxLength(500)
-                                ->rows(1),
+                                ->maxLength(500),
                         ])->columns(2),
                     Step::make('Origen y Destino')
                         ->schema([
@@ -304,7 +300,14 @@ class ShipmentResource extends Resource
                                         ->maxValue(10000000)
                                         ->prefix('Gs. ')
                                         ->integer()
-                                        ->readOnly(),
+                                        ->reactive()
+                                        ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                            $quantity = $get('quantity');
+                                            if ($quantity) {
+                                                $set('total_price', $state * $quantity);
+                                            }
+                                        })
+                                        ->required(),
 
                                     TextInput::make('total_price')
                                         ->label('Subtotal')
@@ -353,7 +356,7 @@ class ShipmentResource extends Resource
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('service_type')
-                    ->label('Tipo de servicio')
+                    ->label('Servicio')
                     ->badge()
                     ->color(fn($state) => match ($state) {
                         'agency_to_agency' => 'success',
@@ -370,19 +373,34 @@ class ShipmentResource extends Resource
                         default => 'Desconocido',
                     })
                     ->sortable(),
-                SelectColumn::make('status')
+                TextColumn::make('status')
                     ->label('Estado')
-                    ->options([
+                    ->badge()
+                    ->color(fn($state) => match ($state) {
+                        'pending' => 'warning',
+                        'in_transit' => 'info',
+                        'delivered' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn($state) => match ($state) {
                         'pending' => 'Pendiente',
                         'in_transit' => 'En tránsito',
                         'delivered' => 'Entregado',
                         'cancelled' => 'Cancelado',
-                    ])
+                        default => 'Desconocido',
+                    })
+                    ->searchable()
                     ->sortable(),
-                
+
                 TextColumn::make('driver.user.name')
                     ->label('Conductor')
                     ->formatStateUsing(fn($state, $record) => $state . ' (' . $record->driver->ci . ')')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('user.name')
+                    ->label('Usuario')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -443,10 +461,63 @@ class ShipmentResource extends Resource
                     })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+
+                Tables\Actions\Action::make('change-status')
+                    ->label('Estado')
+                    ->color('primary')
+                    ->visible(fn($record) => ! in_array($record->status, ['cancelled', 'delivered']))
+                    ->icon('heroicon-o-arrow-path')
+                    ->modalHeading('Escanear ítems del envío')
+                    ->modalSubmitActionLabel('Verificar y cambiar estado')
+                    ->mountUsing(fn($form) => $form->fill([
+                        'scanned_items' => [],
+                    ]))
+                    ->form([
+                        TagsInput::make('scanned_items')
+                            ->label('Códigos escaneados')
+                            ->placeholder('')
+                            ->helperText('Escanea cada código; pulsa la ✖ para eliminar uno erróneo. Utilice "Tab", "Enter" o "Espacio" para separar los códigos.')
+                            ->splitKeys(['Tab', ' '])
+                            ->required(),
+                    ])
+                    ->action(function (array $data, $record) {
+                        $expected = $record->items->flatMap(fn($item) => $item->barcodes)->pluck('barcode')->toArray();
+                        $scanned  = array_map('trim', $data['scanned_items'] ?? []);
+                        $missing  = array_diff($expected, $scanned);
+                        $extra    = array_diff($scanned,  $expected);
+
+                        if ($missing || $extra) {
+                            $message = '';
+                            if ($missing) {
+                                $message .= '<strong>Faltan: </strong>' . implode(', ', $missing) . '. <br>';
+                            }
+                            if ($extra) {
+                                $message .= '<strong>Sobran: </strong>' . implode(', ', $extra) . '.';
+                            }
+                            // Esto detiene el submit, muestra el error sobre el modal y mantiene los tags
+                            Notification::make()
+                                ->danger()
+                                ->title('¡Error!')
+                                ->body($message)
+                                ->send();
+                            throw new Halt();
+                        }
+
+                        // Si todo coincide, avanzamos el estado
+                        $newStatus = $record->status === 'pending' ? 'in_transit' : 'delivered';
+                        $record->update(['status' => $newStatus]);
+
+                        Notification::make()
+                            ->success()
+                            ->title('¡Listo!')
+                            ->body('El envío ha sido cambiado a "' . ($newStatus === 'in_transit' ? 'En tránsito' : 'Entregado') . '".')
+                            ->send();
+                    }),
+
                 Tables\Actions\Action::make('ticket')
                     ->label('Ticket')
                     ->icon('heroicon-o-printer')
+                    ->color('primary')
                     ->url(fn(Shipment $record) => route('shipments.ticket', $record))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('labels')
@@ -455,6 +526,7 @@ class ShipmentResource extends Resource
                     ->color('primary')
                     ->url(fn($record) => route('shipments.labels', $record)) // Usamos una ruta
                     ->openUrlInNewTab(), // Esto hace que abra en nueva pestaña
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

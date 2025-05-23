@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RoleResource\Pages;
-use App\Filament\Resources\RoleResource\RelationManagers;
-use App\Models\Role;
+use App\Filament\Resources\RoleResource\RelationManagers\PermissionsRelationManager;
+use App\Filament\Resources\RolesResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -14,16 +13,18 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Spatie\Permission\Models\Role as ModelsRole;
+use Spatie\Permission\Models\Role;
 
-class RoleResource extends Resource
+class RolesResource extends Resource
 {
-    protected static ?string $model = ModelsRole::class;
+    protected static ?string $model = Role::class;
     protected static ?string $navigationLabel = 'Roles';
     protected static ?string $label = 'Rol';
     protected static ?string $pluralLabel = 'Roles';
     protected static ?string $slug = 'roles';
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+    protected static ?string $navigationGroup = 'Autenticación';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -84,10 +85,19 @@ class RoleResource extends Resource
             ]);
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            PermissionsRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageRoles::route('/'),
+            'index' => Pages\ListRoles::route('/'),
+            'create' => Pages\CreateRoles::route('/create'),
+            'edit' => Pages\EditRoles::route('/{record}/edit'),
         ];
     }
 }

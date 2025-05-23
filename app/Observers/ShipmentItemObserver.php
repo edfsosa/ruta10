@@ -3,25 +3,38 @@
 namespace App\Observers;
 
 use App\Models\ShipmentItem;
+use App\Models\ShipmentItemBarcode;
 
 class ShipmentItemObserver
 {
     /**
      * Handle the ShipmentItem "created" event.
      */
-    public function created(ShipmentItem $shipmentItem): void
+    public function created(ShipmentItem $item): void
     {
-        // Generamos el barcode usando el ID del item y el tracking_number del Shipment
-        $shipmentItem->barcode = $shipmentItem->id . '-' . $shipmentItem->shipment->tracking_number;
-        $shipmentItem->saveQuietly(); // Importante: usar saveQuietly para evitar loops de observers
+        // Genera un código por cada unidad
+        for ($i = 1; $i <= $item->quantity; $i++) {
+            ShipmentItemBarcode::create([
+                'shipment_item_id' => $item->id,
+                'barcode'          => "{$item->id}-{$item->shipment->tracking_number}-{$i}",
+            ]);
+        }
     }
 
-    /**
-     * Handle the ShipmentItem "updated" event.
-     */
-    public function updated(ShipmentItem $shipmentItem): void
+    public function updated(ShipmentItem $item): void
     {
-        //
+        // Si el usuario cambia quantity, puedes regenerar:
+        if ($item->isDirty('quantity')) {
+            // Borrar los anteriores
+            $item->barcodes()->delete();
+            // Volver a generar
+            for ($i = 1; $i <= $item->quantity; $i++) {
+                ShipmentItemBarcode::create([
+                    'shipment_item_id' => $item->id,
+                    'barcode'          => "{$item->id}-{$item->shipment->tracking_number}-{$i}",
+                ]);
+            }
+        }
     }
 
     /**

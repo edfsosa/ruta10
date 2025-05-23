@@ -27,4 +27,9 @@ class ShipmentItem extends Model
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }
+
+    public function barcodes()
+    {
+        return $this->hasMany(ShipmentItemBarcode::class);
+    }
 }

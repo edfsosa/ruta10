@@ -11,25 +11,25 @@ class PricePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->hasPermissionTo('ver precios');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(): bool
     {
-        return $user->hasPermissionTo('ver precios');
+        return true;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(): bool
     {
-        return $user->hasPermissionTo('crear precios');
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class PricePolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasPermissionTo('editar precios');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
@@ -45,13 +45,13 @@ class PricePolicy
      */
     public function delete(User $user): bool
     {
-        return $user->hasPermissionTo('eliminar precios');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Price $price): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class PricePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Price $price): bool
+    public function forceDelete(): bool
     {
         return false;
     }

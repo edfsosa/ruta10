@@ -12,7 +12,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('ver usuarios');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
@@ -20,7 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->hasPermissionTo('ver usuarios') || $user->id === $model->id; // Permitir ver su propio perfil
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador') || $user->id === $model->id; // Permitir ver su propio perfil
     }
 
     /**
@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('crear usuarios');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
@@ -36,7 +36,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->hasPermissionTo('editar usuarios') || $user->id === $model->id; // Permitir editar su propio perfil
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador') || $user->id === $model->id; // Permitir editar su propio perfil
     }
 
     /**
@@ -44,13 +44,13 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->hasPermissionTo('eliminar usuarios') && $user->id !== $model->id; // No permitir eliminar su propio perfil
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador') && $user->id !== $model->id; // No permitir eliminar su propio perfil
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, User $model): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -58,7 +58,7 @@ class UserPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, User $model): bool
+    public function forceDelete(): bool
     {
         return false;
     }

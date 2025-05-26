@@ -11,14 +11,9 @@ class ShipmentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        // Superadministrador y Administrador ve todos
-        if ($user->hasRole('Superadministrador') || $user->hasRole('Administrador')) {
-            return true;
-        }
-        
-        return $user->hasPermissionTo('ver envios');
+        return true; // Superadministrador y Administrador ve todos
     }
 
     /**
@@ -33,15 +28,15 @@ class ShipmentPolicy
 
 
         // Asumiendo que el modelo Shipment tiene una relación con el usuario que lo creó
-        return $user->hasPermissionTo('ver envios') && $user->id === $shipment->user_id;
+        return $user->hasRole('Conductor') && $user->id === $shipment->user_id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(): bool
     {
-        return $user->hasPermissionTo('crear envios');
+        return true;
     }
 
     /**
@@ -55,7 +50,7 @@ class ShipmentPolicy
         }
 
         // Asumiendo que el modelo Shipment tiene una relación con el usuario que lo creó
-        return $user->hasPermissionTo('editar envios') && $user->id === $shipment->user_id;
+        return $user->hasRole('Conductor') && $user->id === $shipment->user_id;
     }
 
     /**
@@ -63,19 +58,13 @@ class ShipmentPolicy
      */
     public function delete(User $user, Shipment $shipment): bool
     {
-        // Superadministrador y Administrador puede eliminar todos
-        if ($user->hasRole('Superadministrador') || $user->hasRole('Administrador')) {
-            return true;
-        }
-
-        // Asumiendo que el modelo Shipment tiene una relación con el usuario que lo creó
-        return $user->hasPermissionTo('eliminar envios') && $user->id === $shipment->user_id;
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Shipment $shipment): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -83,7 +72,7 @@ class ShipmentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Shipment $shipment): bool
+    public function forceDelete(): bool
     {
         return false;
     }

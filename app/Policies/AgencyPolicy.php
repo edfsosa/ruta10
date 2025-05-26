@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Agency;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -11,17 +10,17 @@ class AgencyPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
-        return $user->hasPermissionTo('ver agencias');
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(): bool
     {
-        return $user->hasPermissionTo('ver agencias');
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class AgencyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('crear agencias');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
@@ -37,7 +36,7 @@ class AgencyPolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasPermissionTo('editar agencias');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
@@ -45,13 +44,13 @@ class AgencyPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->hasPermissionTo('eliminar agencias');
+        return $user->hasRole('Superadministrador') || $user->hasRole('Administrador');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Agency $agency): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -59,7 +58,7 @@ class AgencyPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Agency $agency): bool
+    public function forceDelete(): bool
     {
         return false;
     }

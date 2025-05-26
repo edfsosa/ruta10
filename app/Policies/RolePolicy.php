@@ -14,7 +14,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('ver roles');
+        return $user->hasRole('Superadministrador');
     }
 
     /**
@@ -22,7 +22,7 @@ class RolePolicy
      */
     public function view(User $user): bool
     {
-        return $user->hasPermissionTo('ver roles');
+        return $user->hasRole('Superadministrador');
     }
 
     /**
@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('crear roles');
+        return $user->hasRole('Superadministrador');
     }
 
     /**
@@ -38,7 +38,7 @@ class RolePolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasPermissionTo('editar roles');
+        return $user->hasRole('Superadministrador');
     }
 
     /**
@@ -46,13 +46,13 @@ class RolePolicy
      */
     public function delete(User $user): bool
     {
-        return $user->hasPermissionTo('eliminar roles');
+        return $user->hasRole('Superadministrador');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ModelsRole $role): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -60,7 +60,7 @@ class RolePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ModelsRole $role): bool
+    public function forceDelete(): bool
     {
         return false;
     }

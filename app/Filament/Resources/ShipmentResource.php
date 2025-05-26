@@ -400,6 +400,27 @@ class ShipmentResource extends Resource
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('payment_method')
+                    ->label('Método pago')
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        'efectivo' => 'Efectivo',
+                        'crédito' => 'Crédito',
+                        'transferencia bancaria' => 'Transferencia bancaria',
+                        'qr' => 'Código QR',
+                        'tarjeta débito' => 'Tarjeta de débito',
+                        'tarjeta crédito' => 'Tarjeta de crédito',
+                        'contra entrega' => 'Contra entrega',
+                        default => $state,
+                    })
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('total_envio')
+                    ->label('Total (Gs.)')
+                    ->getStateUsing(fn($record) => $record->items->sum('total_price'))
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('driver.user.name')
                     ->label('Conductor')
                     ->formatStateUsing(fn($state, $record) => $state . ' (' . $record->driver->ci . ')')
@@ -419,6 +440,11 @@ class ShipmentResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                SelectFilter::make('sender_id')
+                    ->label('Remitente')
+                    ->relationship('sender', 'full_name')
+                    ->searchable()
+                    ->native(false),
                 SelectFilter::make('status')
                     ->label('Estado')
                     ->multiple()
@@ -437,6 +463,19 @@ class ShipmentResource extends Resource
                         'door_to_door' => 'Puerta a Puerta',
                         'agency_to_door' => 'Agencia a Puerta',
                         'door_to_agency' => 'Puerta a Agencia',
+                    ])
+                    ->native(false),
+                SelectFilter::make('payment_method')
+                    ->label('Método de pago')
+                    ->multiple()
+                    ->options([
+                        'efectivo' => 'Efectivo',
+                        'crédito' => 'Crédito',
+                        'transferencia bancaria' => 'Transferencia bancaria',
+                        'qr' => 'Código QR',
+                        'tarjeta débito' => 'Tarjeta de débito',
+                        'tarjeta crédito' => 'Tarjeta de crédito',
+                        'contra entrega' => 'Contra entrega',
                     ])
                     ->native(false),
                 Filter::make('created_at')
